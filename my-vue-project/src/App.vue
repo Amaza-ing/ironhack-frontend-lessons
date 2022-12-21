@@ -1,4 +1,34 @@
 <template>
+  <FormComponent></FormComponent>
+  <BlogPost :title="myTrip">
+    <ul>
+      <li><p>{{ myNum }} Sitios que visité</p></li>
+      <li><p>Comida que probé</p></li>
+      <li><p>Fotos que saqué</p></li>
+    </ul>
+  </BlogPost>
+  <BlogPost title="Recetas deliciosas">
+    <template v-slot="endWords">
+      <p>Disfruta tu comida! ;)</p>
+    </template>
+  </BlogPost>
+  <BlogPost title="Mis películas favoritas"></BlogPost>
+  <BlogPost v-if="showPost" title="Hola a todos"></BlogPost>
+  <BlogPost v-else-if="showOtherPost" title="Adios a todos"></BlogPost>
+  <BlogPost v-else title="post de reserva"></BlogPost>
+
+  <h2 v-show="false">Me renderizo aunque no me muestre</h2>
+
+
+  <ul class="post-list">
+    <li v-for="(post, index) in posts" :key="post.id">
+      <h2>post id: {{ post.id }} & index: {{ index }}</h2>
+      <BlogPost :title="post.title"></BlogPost>
+    </li>
+  </ul>
+
+
+
   <h1>This is inside App.vue</h1>
   <p v-bind:class="myClass" :id="myId">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugiat, doloribus!</p>
   <TestComponent></TestComponent>
@@ -13,10 +43,14 @@
 
 <script>
 import TestComponent from "./components/TestComponent.vue"
+import BlogPost from "./components/BlogPost.vue"
+import FormComponent from "./components/FormComponent.vue"
 
 export default {
   components: {
-    TestComponent
+    TestComponent,
+    BlogPost,
+    FormComponent
   },
   data() {
     return {
@@ -24,7 +58,16 @@ export default {
       myNum: 23,
       myHtml: "<em>This is html in a variable</em>",
       myClass: "big",
-      myId: "my-id"
+      myId: "my-id",
+      myTrip: "Mi viaje a Francia",
+      showPost: false,
+      showOtherPost: false,
+      posts: [
+        {title: "Mi viaje a Francia", id: 0},
+        {title: "Recetas deliciosas", id: 1},
+        {title: "Mis películas favoritas", id: 2},
+        {title: "Hola a todos", id: 3}
+      ]
     }
   },
   methods: {
@@ -57,5 +100,10 @@ p {
 
 .small {
   font-size: 4px;
+}
+
+.post-list {
+  list-style: none;
+  padding-left: 0;
 }
 </style>
