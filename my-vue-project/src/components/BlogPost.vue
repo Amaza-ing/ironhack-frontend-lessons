@@ -1,4 +1,5 @@
 <template>
+  <slot name="firstWords"></slot>
   <h2>{{ title }}</h2>
   <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates earum adipisci libero veniam quae illo.</p>
   <div class="blog-slot">

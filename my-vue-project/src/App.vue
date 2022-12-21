@@ -8,7 +8,10 @@
     </ul>
   </BlogPost>
   <BlogPost title="Recetas deliciosas">
-    <template v-slot="endWords">
+    <template v-slot:firstWords>
+      <p>ñam ñam</p>
+    </template>
+    <template v-slot:endWords>
       <p>Disfruta tu comida! ;)</p>
     </template>
   </BlogPost>
