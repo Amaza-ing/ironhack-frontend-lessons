@@ -1,7 +1,17 @@
 <template>
+  <div @click="posts[0].title += 'a'">{{ posts[0].title }}</div>
+  <div>computed: {{ myComputedVariable }}</div>
+  <div>variable: {{ textLength }}</div>
+
+  <section v-if="selectedPokemon.name" class="selected-pokemon">
+    <h2>Selected Pokemon</h2>
+    <h3>Name: {{ selectedPokemon.name }}</h3>
+    <img :src="selectedPokemon.img" alt="selected pokemon img">
+  </section>
+
   <ul class="pokemon-list">
     <li v-for="(pokemon, index) in pokemons" :key="pokemon.name">
-      <PokemonCard :pokemon="pokemons[index]"></PokemonCard>
+      <PokemonCard @pokemon-selected="pokemonHandler" :pokemon="pokemons[index]"></PokemonCard>
     </li>
   </ul>
 
@@ -89,10 +99,18 @@ export default {
         {title: "Mis películas favoritas", id: 2},
         {title: "Hola a todos", id: 3}
       ],
-      pokemons: []
+      pokemons: [],
+      selectedPokemon: {},
+      textLength: []
+    }
+  },
+  computed: {
+    myComputedVariable() {
+      return this.posts[0].title.length
     }
   },
   async created() {
+    this.textLength = this.posts[0].title.length
     for (let i = 1; i < 10; i++) {
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`)
       const data = await response.json()
@@ -114,6 +132,11 @@ export default {
     },
     modifyMyClass() {
       this.myClass = "small"
+    },
+    pokemonHandler(pokeData) {
+      console.log("pokemon-selected event captured");
+      console.log("pokeData: ", pokeData);
+      this.selectedPokemon = pokeData;
     }
   }
 }
@@ -147,5 +170,12 @@ p {
   display: flex;
   flex-wrap: wrap;
   gap: 3px
+}
+
+.selected-pokemon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>

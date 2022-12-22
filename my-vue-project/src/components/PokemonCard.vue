@@ -1,5 +1,5 @@
 <template>
-  <section class="pokemon-card">
+  <section @click="selectPokemon" class="pokemon-card">
     <div class="pokemon-name">
       {{ pokemon.name }}
     </div>
@@ -26,6 +26,12 @@ export default {
         img: "https://pbs.twimg.com/profile_images/585913364720840704/Ta56Yrim_400x400.png"
       }
     }
+  },
+  methods: {
+    selectPokemon() {
+      console.log("pokemon selected: ", {...this.pokemon})
+      this.$emit("pokemon-selected", {...this.pokemon})
+    }
   }
 }
 </script>
@@ -50,5 +56,11 @@ export default {
 
   .pokemon-img {
     max-width: 100px;
+  }
+
+  .pokemon-card:hover {
+    background-color: darkblue;
+    color: white;
+    cursor: pointer;
   }
 </style>

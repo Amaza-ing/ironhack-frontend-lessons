@@ -34,6 +34,8 @@
       <option value="C">C</option>
     </select>
 
+    <button @click.prevent="" type="submit">Submit</button>
+
   </form>
 
   <p>Your name is: {{ name }}</p>
