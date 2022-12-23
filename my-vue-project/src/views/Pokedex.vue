@@ -1,5 +1,5 @@
 <template>
-  <section v-if="selectedPokemon.name" class="selected-pokemon">
+  <section v-if="selectedPokemon" class="selected-pokemon">
     <h2>Selected Pokemon</h2>
     <h3>Name: {{ selectedPokemon.name }}</h3>
     <img :src="selectedPokemon.img" alt="selected pokemon img" />
@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       pokemons: [],
-      selectedPokemon: {},
+      selectedPokemon: null,
     };
   },
   async created() {
