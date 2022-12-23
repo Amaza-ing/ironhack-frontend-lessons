@@ -1,19 +1,40 @@
 <template>
-  <div @click="posts[0].title += 'a'">{{ posts[0].title }}</div>
-  <div>computed: {{ myComputedVariable }}</div>
-  <div>variable: {{ textLength }}</div>
+  <header><h1>header</h1></header>
 
-  <section v-if="selectedPokemon.name" class="selected-pokemon">
-    <h2>Selected Pokemon</h2>
-    <h3>Name: {{ selectedPokemon.name }}</h3>
-    <img :src="selectedPokemon.img" alt="selected pokemon img">
-  </section>
+  <router-view></router-view>
+  
+  <footer><p>footer</p></footer>
 
-  <ul class="pokemon-list">
-    <li v-for="(pokemon, index) in pokemons" :key="pokemon.name">
-      <PokemonCard @pokemon-selected="pokemonHandler" :pokemon="pokemons[index]"></PokemonCard>
-    </li>
-  </ul>
+
+
+
+
+
+
+  <div v-if="false">
+    <div @click="myStr += '!'">{{ myStr }}</div>
+    <div @click="posts[0].title += 'a'">{{ posts[0].title }}</div>
+    <div>computed: {{ myComputedVariable }}</div>
+    <div>variable: {{ textLength }}</div>  
+  </div>
+
+
+
+
+
+  <div v-if="false">
+    <section v-if="selectedPokemon.name" class="selected-pokemon">
+      <h2>Selected Pokemon</h2>
+      <h3>Name: {{ selectedPokemon.name }}</h3>
+      <img :src="selectedPokemon.img" alt="selected pokemon img">
+    </section>
+  
+    <ul class="pokemon-list">
+      <li v-for="(pokemon, index) in pokemons" :key="pokemon.name">
+        <PokemonCard @pokemon-selected="pokemonHandler" :pokemon="pokemons[index]"></PokemonCard>
+      </li>
+    </ul>  
+  </div>
 
 
 
@@ -75,17 +96,19 @@ import TestComponent from "./components/TestComponent.vue"
 import BlogPost from "./components/BlogPost.vue"
 import FormComponent from "./components/FormComponent.vue"
 import PokemonCard from "./components/PokemonCard.vue"
+import Pokedex from "./views/Pokedex.vue"
 
 export default {
   components: {
     TestComponent,
     BlogPost,
     FormComponent,
-    PokemonCard
+    PokemonCard,
+    Pokedex
   },
   data() {
     return {
-      myStr: "hola Ir",
+      myStr: "hola Ironhack",
       myNum: 23,
       myHtml: "<em>This is html in a variable</em>",
       myClass: "big",
@@ -137,6 +160,27 @@ export default {
       console.log("pokemon-selected event captured");
       console.log("pokeData: ", pokeData);
       this.selectedPokemon = pokeData;
+    }
+  },
+  watch: {
+    // se está creando un watch para vigilar cambios en la variable myStr, cada vez que se produzca
+    // un cambio se invocará el método definido a continuación, esto se puede hacer así sólo cuando
+    // la variable sea de tipo primitivo
+    myStr(newValue, oldValue) {
+      console.log("myStr oldValue: ", oldValue)
+      console.log("myStr newValue: ", newValue)
+    },
+    posts() {
+      console.log("we cannot watch arrays or objects this way")
+    },
+    // para vigilar las variables no primitivas (arrays y objetos) necesitamos envolver el watch en
+    // un objeto al que añadimos la propiedad deep: true
+    // en las variables no primitivas tan sólo tendremos acceso al newValue si lo colocamos como primer parámetro
+    posts: {
+      handler() {
+        console.log("something has changed in posts")
+      },
+      deep: true
     }
   }
 }
